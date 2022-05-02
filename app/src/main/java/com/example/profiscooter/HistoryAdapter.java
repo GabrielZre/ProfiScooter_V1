@@ -52,7 +52,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tripName = itemView.findViewById(R.id.tvTripName);
+            tripName = itemView.findViewById(R.id.etBatteryAh);
             distance = itemView.findViewById(R.id.tvHistoryDistance);
             distanceTime = itemView.findViewById(R.id.tvHistoryDistanceTime);
             averageSpeed = itemView.findViewById(R.id.tvHistoryAvgSpeed);

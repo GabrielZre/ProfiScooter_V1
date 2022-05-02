@@ -7,18 +7,22 @@
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/buttonradiusstyle.xml" value="0.1475" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_access_time_filled_24.xml" value="0.1475" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.116" />
+        <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_bookmark_add_24.xml" value="0.196" />
+        <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.196" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.161" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_logout_24.xml" value="0.161" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.116" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.116" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_speed_24.xml" value="0.161" />
+        <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_baseline_stop_24.xml" value="0.196" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/drawable/ic_launcher_background.xml" value="0.116" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_forgot_password.xml" value="0.16751269035532995" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_history_list.xml" value="0.13618974751338944" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_profile_dashboard.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_register_user.xml" value="0.22" />
-        <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_scooter_dashboard.xml" value="0.15" />
+        <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/activity_scooter_dashboard.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/batterysettings.xml" value="0.249609375" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.13446824789594491" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/historyitem.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/ProfiScooter/app/src/main/res/layout/savedialog.xml" value="0.18" />

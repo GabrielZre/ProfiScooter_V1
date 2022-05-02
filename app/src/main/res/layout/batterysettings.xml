@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:isScrollContainer="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="350dp"
+    android:layout_gravity="center"
+    android:layout_height="match_parent"
+    >
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"/>
+
+            <EditText
+                android:id="@+id/etBatteryAh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="BATTERY AH"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/ic_baseline_battery_saver_24"
+                android:drawablePadding="5dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBattery" />
+
+            <EditText
+                android:id="@+id/etBatteryVoltage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="VOLTAGE"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/ic_baseline_bolt_24"
+                android:drawablePadding="5dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etBatteryAh" />
+
+            <EditText
+                android:id="@+id/etMotorPower"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="MOTOR WATT POWER"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/ic_baseline_electric_scooter_24"
+                android:drawablePadding="5dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etBatteryVoltage" />
+            <EditText
+                android:id="@+id/etBottomCutOff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="BOTTOM CUTOFF"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/ic_baseline_battery_0_bar_24"
+                android:drawablePadding="5dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etMotorPower" />
+            <EditText
+                android:id="@+id/etUpperCutOff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="UPPER CUTOFF"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/ic_baseline_battery_std_24"
+                android:drawablePadding="5dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etBottomCutOff" />
+
+
+
+
+
+            <TextView
+                android:id="@+id/textViewBattery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="Settings"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/buttonSave"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/etUpperCutOff"
+                app:srcCompat="@drawable/ic_baseline_bookmark_add_24"
+                android:background="@drawable/buttonradiusstyle"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonBack"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintRight_toLeftOf="@+id/guideline"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etUpperCutOff"
+                app:srcCompat="@drawable/ic_baseline_bookmark_remove_24"
+                android:background="@drawable/buttonradiusstyle"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>

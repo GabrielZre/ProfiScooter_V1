@@ -1,6 +1,5 @@
 package com.example.profiscooter;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -8,7 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -21,44 +24,89 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.anastr.speedviewlib.PointerSpeedometer;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Formatter;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.os.Bundle;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 public class ScooterDashboard extends AppCompatActivity implements LocationListener {
+    private final Context context;
+
+    public ScooterDashboard(Context context){
+        this.context=context;
+    }
+
+
+    static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private static boolean isButtonChecked = false;
     private static double totalDistance = 0 ;
     private static float nCurrentSpeed = 0;
     private static double avgSpeed = 0;
 
+    private volatile boolean stopThread = true;
+    private volatile boolean isBluetoothSuccess = false;
+
+    private static boolean batterySettingsDefined = false;
+    private static double batteryAhX, batteryVoltageX, motorPowerX, bottomCutOffX, upperCutOffX;
+    private static double currentBatteryVoltage;
+    private static double batteryPercentage, batteryDistance;
+
     private static Location locEnd = null;
     private static Location locStart = null;
 
+    private DatabaseReference reference;
+
+
+
     //TextView textViewSpeed;
     TextView textViewTotalDistance, textViewAvgSpeed;
+    TextView textViewBatteryPercentage, textViewBatteryDistance;
     //TextView textViewLatitude,textViewLongitude;
     //ToggleButton buttonStartMeasuring;
     PointerSpeedometer speedometer;
     TextView timerText;
     ImageButton stopStartButton, saveButton;
+    ImageView batBluetooth;
 
 
     Timer timer;
@@ -66,7 +114,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     Double time = 0.0;
     boolean timerStarted = false;
 
-    Dialog tripdialog;
+    Dialog tripdialog, batteryDialog;
 
 
     @Override
@@ -83,6 +131,43 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         textViewTotalDistance.setText(String.format("%.1f", totalDistance)+" km");
         //buttonStartMeasuring = findViewById(R.id.startMeasuring);
         //check for gps permission
+        textViewBatteryDistance = findViewById(R.id.textViewBatteryDistance);
+        textViewBatteryPercentage = findViewById(R.id.textViewBatteryPercentage);
+
+        batBluetooth = findViewById(R.id.startBatteryMeasurement);
+
+
+        batBluetooth.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(ScooterDashboard.this, "Disconnect...", Toast.LENGTH_SHORT).show();
+                stopThread(view);
+                return true;
+            }
+        });
+
+        batBluetooth.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.R)
+            @Override
+            public void onClick(View view) {
+                if(!stopThread){
+                    Toast.makeText(ScooterDashboard.this, "Options...", Toast.LENGTH_SHORT).show();
+                    showBatteryDialog();
+                }
+                if(stopThread){
+                    Toast.makeText(ScooterDashboard.this, "Connecting...", Toast.LENGTH_SHORT).show();
+                    startThread(view);
+                    textViewBatteryDistance.setText(Double.toString(batteryDistance));
+                    textViewBatteryPercentage.setText(Double.toString(batteryPercentage));
+                    //textViewBatteryPercentage.setVisibility(View.VISIBLE);
+                    textViewBatteryDistance.setVisibility(View.VISIBLE);
+
+
+
+                }
+
+            }
+        });
 
         speedometer = findViewById(R.id.pointerSpeedometer);
 
@@ -91,6 +176,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         stopStartButton = (ImageButton) findViewById(R.id.startStopButton);
         saveButton = (ImageButton) findViewById(R.id.saveButton);
         tripdialog = new Dialog(this);
+        batteryDialog = new Dialog(this);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +203,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
 
 
+
     }
 
     private void showDialog() {
@@ -125,7 +212,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         tripdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         tripdialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        EditText tripName = tripdialog.findViewById(R.id.tvTripName);
+        EditText tripName = tripdialog.findViewById(R.id.etBatteryAh);
         ImageButton buttonSave = tripdialog.findViewById(R.id.buttonSave);
         ImageButton buttonBack = tripdialog.findViewById(R.id.buttonBack);
 
@@ -192,30 +279,85 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         });
 
         tripdialog.show();
+    }
 
-        /*LayoutInflater inflater = getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.savedialog, null);
+    private void showBatteryDialog() {
+        batteryDialog.setContentView(R.layout.batterysettings);
 
-        EditText tripName = view.findViewById(R.id.tvTripName);
-        ImageButton saveButton = view.findViewById(R.id.saveButton);
+        batteryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        batteryDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        savealert.setView(view);
-        savealert.setCancelable(false);
+        EditText batteryAh = batteryDialog.findViewById(R.id.etBatteryAh);
+        EditText batteryVoltage = batteryDialog.findViewById(R.id.etBatteryVoltage);
+        EditText motorWatt = batteryDialog.findViewById(R.id.etMotorPower);
+        EditText bottomCutOff = batteryDialog.findViewById(R.id.etBottomCutOff);
+        EditText upperCutOff = batteryDialog.findViewById(R.id.etUpperCutOff);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonSave = batteryDialog.findViewById(R.id.buttonSave);
+        ImageButton buttonBack = batteryDialog.findViewById(R.id.buttonBack);
+
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                String trip_name = tripName.getText().toString();
-                Toast.makeText(getApplicationContext(), "Added: "+trip_name, Toast.LENGTH_LONG).show();
+
+                String battery_Ah = batteryAh.getText().toString();
+                String battery_Voltage = batteryVoltage.getText().toString();
+                String motor_Watt = motorWatt.getText().toString();
+                String bottom_CutOff = bottomCutOff.getText().toString();
+                String upper_CutOff = upperCutOff.getText().toString();
+
+                //time in minutes
+
+                if(battery_Ah.isEmpty()){
+                    batteryAh.setError("Battery Ah is required!");
+                    batteryAh.requestFocus();
+                    return;
+                }
+                if(battery_Voltage.isEmpty()){
+                    batteryVoltage.setError("Battery Voltage is required!");
+                    batteryVoltage.requestFocus();
+                    return;
+                }
+                if(motor_Watt.isEmpty()){
+                    motorWatt.setError("Motor Watt is required!");
+                    motorWatt.requestFocus();
+                    return;
+                }
+                if(bottom_CutOff.isEmpty()){
+                    bottomCutOff.setError("Bottom CutOff is required!");
+                    bottomCutOff.requestFocus();
+                    return;
+                }
+                if(upper_CutOff.isEmpty()){
+                    upperCutOff.setError("Upper CutOff is required!");
+                    upperCutOff.requestFocus();
+                    return;
+                }
+
+                ScooterInfo scooterInfo = new ScooterInfo(battery_Ah, battery_Voltage, motor_Watt, bottom_CutOff, upper_CutOff);
+                FirebaseDatabase.getInstance().getReference("Users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("scooter")
+                        .setValue(scooterInfo);
+
+
+                batteryDialog.dismiss();
+                Toast.makeText(ScooterDashboard.this,"Saved", Toast.LENGTH_SHORT).show();
+                tryPreviousSettings();
             }
         });
 
-        AlertDialog dialog = savealert.create();
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.show();
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                batteryDialog.dismiss();
+                Toast.makeText(ScooterDashboard.this,"Back", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-         */
+        batteryDialog.show();
 
     }
 
@@ -439,4 +581,198 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             }
         }
     }
+
+
+
+    public void tryPreviousSettings(){
+        //get batterySettings in Scooter if exist
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("scooter").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ScooterInfo userProfile = snapshot.getValue(ScooterInfo.class);
+
+                if(userProfile != null) {
+
+
+                    batteryAhX = Double.parseDouble(userProfile.batteryAh);
+                    batteryVoltageX = Double.parseDouble(userProfile.batteryVoltage);
+                    motorPowerX = Double.parseDouble(userProfile.motorWatt);
+                    bottomCutOffX = Double.parseDouble(userProfile.bottomCutOff);
+                    upperCutOffX = Double.parseDouble(userProfile.upperCutOff);
+
+                    batterySettingsDefined = true;
+                }
+                if(userProfile == null) {
+                    Toast.makeText(ScooterDashboard.this, "Click battery to set up!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ScooterDashboard.this, "Something wrong happened!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    public void startThread(View view) {
+        stopThread = false;
+        ExampleRunnable runnable = new ExampleRunnable();
+        new Thread(runnable).start();
+
+    }
+
+    public void stopThread(View view) {
+        stopThread = true;
+        batBluetooth.setImageResource(R.drawable.batbluetooth);
+        textViewBatteryPercentage.setVisibility(View.INVISIBLE);
+        textViewBatteryDistance.setVisibility(View.INVISIBLE);
+    }
+
+
+
+    class ExampleRunnable extends ScooterDashboard implements Runnable {
+
+
+
+        @Override
+        public void run() {
+            while (!stopThread){
+                BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+                System.out.println(btAdapter.getBondedDevices());
+
+                BluetoothDevice hc05 = btAdapter.getRemoteDevice("C8:C9:A3:D1:9E:22");
+                System.out.println(hc05.getName());
+
+                BluetoothSocket btSocket = null;
+                int counter = 0;
+                do {
+                    try {
+                        btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
+                        System.out.println(btSocket);
+                        btSocket.connect();
+                        System.out.println(btSocket.isConnected());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    counter++;
+                } while (!btSocket.isConnected() && counter < 3);
+                if(btSocket.isConnected()){
+                    System.out.println("ITS  OKAYYYYY");
+                    isBluetoothSuccess = true;
+                }
+
+                try {
+                    OutputStream outputStream = btSocket.getOutputStream();
+                    outputStream.write(48);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                InputStream inputStream = null;
+                try {
+                    inputStream = btSocket.getInputStream();
+                    inputStream.skip(inputStream.available());
+                    char[] byteArray = new char[4];
+                    String voltageString = "";
+
+                    for (int i = 0; i < 4; i++) {
+
+                        char b = (char) inputStream.read();
+                        byteArray[i]=b;
+                        voltageString += b;
+
+
+                    }
+                    System.out.println(Arrays.toString(byteArray));
+                    System.out.println(voltageString);
+                    double voltage = Double.parseDouble(voltageString);
+                    currentBatteryVoltage = voltage;
+                    System.out.println(currentBatteryVoltage);
+                    //calculate the % and km, and change image of battery while currentVoltage is > 0
+                    if(!batterySettingsDefined){
+                        tryPreviousSettings();
+                    }
+                    if(currentBatteryVoltage > 0 && batterySettingsDefined){
+                        setTextBattery();
+
+                        //LayoutInflater inflater = getLayoutInflater();
+                        //View myView = inflater.inflate(R.layout.activity_scooter_dashboard, null);
+                        //TextView myTextView = myView.findViewById(R.id.textViewBatteryPercentage);
+                        //myTextView.setVisibility(View.VISIBLE);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    btSocket.close();
+                    System.out.println(btSocket.isConnected());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void setTextBattery() {
+        setBatteryPercentage();
+        setBatteryDistance();
+    }
+
+    private void setBatteryDistance() {
+
+        double distance = ((batteryAhX * batteryVoltageX) / motorPowerX) * 30; // default average 30 km/h
+
+        batteryDistance = distance;
+    }
+
+    private void setBatteryPercentage() {
+        TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textViewBatteryPercentage);
+        txtView.setVisibility(View.VISIBLE);
+        double percentage = ((currentBatteryVoltage - bottomCutOffX) * 100) * (upperCutOffX - bottomCutOffX);
+        if(percentage > 90){
+            batBluetooth.setImageResource(R.drawable.bat100);
+        }
+        if(percentage <= 90 && percentage > 80){
+            batBluetooth.setImageResource(R.drawable.bat90);
+        }
+        if(percentage <= 80 && percentage > 70){
+            batBluetooth.setImageResource(R.drawable.bat80);
+        }
+        if(percentage <= 70 && percentage > 60){
+            batBluetooth.setImageResource(R.drawable.bat70);
+        }
+        if(percentage <= 60 && percentage > 50){
+            batBluetooth.setImageResource(R.drawable.bat60);
+        }
+        if(percentage <= 50 && percentage > 40){
+            batBluetooth.setImageResource(R.drawable.bat50);
+        }
+        if(percentage <= 40 && percentage > 30){
+            batBluetooth.setImageResource(R.drawable.bat40);
+        }
+        if(percentage <= 30 && percentage > 20){
+            batBluetooth.setImageResource(R.drawable.bat30);
+        }
+        if(percentage <= 20 && percentage > 10){
+            batBluetooth.setImageResource(R.drawable.bat20);
+        }
+        if(percentage <= 10 && percentage > 0){
+            batBluetooth.setImageResource(R.drawable.bat10);
+        }
+        if(percentage <= 0){
+            batBluetooth.setImageResource(R.drawable.bat0);
+        }
+
+        batteryPercentage = percentage;
+    }
+
 }
