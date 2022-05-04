@@ -125,7 +125,6 @@ public class ProfileDashboard extends AppCompatActivity {
         listHistory = new ArrayList<>();
         myHistoryAdapter = new HistoryAdapter(this,listHistory);
         recyclerViewHistory.setAdapter(myHistoryAdapter);
-
         historyReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

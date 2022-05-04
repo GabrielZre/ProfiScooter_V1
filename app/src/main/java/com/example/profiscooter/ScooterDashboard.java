@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -69,17 +68,11 @@ import android.util.Log;
 import android.view.View;
 
 public class ScooterDashboard extends AppCompatActivity implements LocationListener {
-    private final Context context;
-
-    public ScooterDashboard(Context context){
-        this.context=context;
-    }
-
 
     static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private static boolean isButtonChecked = false;
-    private static double totalDistance = 0 ;
+    private static double totalDistance = 0;
     private static float nCurrentSpeed = 0;
     private static double avgSpeed = 0;
 
@@ -90,12 +83,12 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     private static double batteryAhX, batteryVoltageX, motorPowerX, bottomCutOffX, upperCutOffX;
     private static double currentBatteryVoltage;
     private static double batteryPercentage, batteryDistance;
+    private static double batteryPercentageStart = 0;
 
     private static Location locEnd = null;
     private static Location locStart = null;
 
     private DatabaseReference reference;
-
 
 
     //TextView textViewSpeed;
@@ -128,11 +121,18 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         textViewTotalDistance = findViewById(R.id.textViewTotalDistance);
         textViewAvgSpeed = findViewById(R.id.textViewAvgSpeed);
         //textViewSpeed.setText(String.format("%.1f", nCurrentSpeed) +" km/h");
-        textViewTotalDistance.setText(String.format("%.1f", totalDistance)+" km");
+        textViewTotalDistance.setText(String.format("%.1f", totalDistance) + " km");
         //buttonStartMeasuring = findViewById(R.id.startMeasuring);
         //check for gps permission
         textViewBatteryDistance = findViewById(R.id.textViewBatteryDistance);
         textViewBatteryPercentage = findViewById(R.id.textViewBatteryPercentage);
+
+        new ScooterDashboard().runOnUiThread(() -> {
+
+//put your UI access code here
+
+        });
+
 
         batBluetooth = findViewById(R.id.startBatteryMeasurement);
 
@@ -150,20 +150,13 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onClick(View view) {
-                if(!stopThread){
+                if (!stopThread) {
                     Toast.makeText(ScooterDashboard.this, "Options...", Toast.LENGTH_SHORT).show();
                     showBatteryDialog();
                 }
-                if(stopThread){
+                if (stopThread) {
                     Toast.makeText(ScooterDashboard.this, "Connecting...", Toast.LENGTH_SHORT).show();
                     startThread(view);
-                    textViewBatteryDistance.setText(Double.toString(batteryDistance));
-                    textViewBatteryPercentage.setText(Double.toString(batteryPercentage));
-                    //textViewBatteryPercentage.setVisibility(View.VISIBLE);
-                    textViewBatteryDistance.setVisibility(View.VISIBLE);
-
-
-
                 }
 
             }
@@ -188,20 +181,15 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         timer = new Timer();
 
 
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},100);
-        }else{
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        } else {
             doStuff();
         }
 
         updateSpeed(null);
         updateLocation(null);
-
-
-
 
 
     }
@@ -224,14 +212,19 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
         //calculate minutes
         double rounded = (double) Math.round(time);
-        double minutes = BigDecimal.valueOf(((rounded % 86400) / 3600)*60)
+        double minutes = BigDecimal.valueOf(((rounded % 86400) / 3600) * 60)
                 .setScale(3, RoundingMode.HALF_UP)
                 .doubleValue();
+        if(batteryPercentageStart != 0) {
+            double batteryPercentageDrain = batteryPercentageStart - batteryPercentage;
+            batteryDrain.setText(String.format("%.0f", batteryPercentageDrain) + "%");
+        } else {
+            batteryDrain.setText("-");
+        }
+        distance.setText(String.format("%.1f", totalDistance) + " km");
+        timeNum.setText(String.format("%.0f", minutes) + " min");
+        averageSpeed.setText(String.format("%.1f", getAveragedSpeed()) + " km/h");
 
-        distance.setText(String.format("%.1f",totalDistance) +" km");
-        timeNum.setText(String.format("%.0f",minutes) + " min");
-        averageSpeed.setText(String.format("%.1f",getAveragedSpeed()) +" km/h");
-        batteryDrain.setText("15" + "%");
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -242,13 +235,13 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
                 //time in minutes
 
-                if(trip_name.isEmpty()){
+                if (trip_name.isEmpty()) {
                     tripName.setError("Trip Name is required!");
                     tripName.requestFocus();
                     return;
                 }
 
-                if(trip_name.length() > 15){
+                if (trip_name.length() > 15) {
                     tripName.setError("Max Trip Name up to 15 characters!");
                     tripName.requestFocus();
                     return;
@@ -259,14 +252,13 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
                 LocalDateTime now = LocalDateTime.now();
 
 
-
-                Trip trip = new Trip(dtf.format(now),trip_name, (String) distance.getText(), (String) timeNum.getText(), (String) averageSpeed.getText(), (String) batteryDrain.getText());
+                Trip trip = new Trip(dtf.format(now), trip_name, (String) distance.getText(), (String) timeNum.getText(), (String) averageSpeed.getText(), (String) batteryDrain.getText());
                 FirebaseDatabase.getInstance().getReference("Users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("trips").child(dtfForDatabase.format(now))
                         .setValue(trip);
 
                 tripdialog.dismiss();
-                Toast.makeText(ScooterDashboard.this,"Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScooterDashboard.this, "Saved", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -274,7 +266,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             @Override
             public void onClick(View view) {
                 tripdialog.dismiss();
-                Toast.makeText(ScooterDashboard.this,"Back", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScooterDashboard.this, "Back", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -311,27 +303,27 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
                 //time in minutes
 
-                if(battery_Ah.isEmpty()){
+                if (battery_Ah.isEmpty()) {
                     batteryAh.setError("Battery Ah is required!");
                     batteryAh.requestFocus();
                     return;
                 }
-                if(battery_Voltage.isEmpty()){
+                if (battery_Voltage.isEmpty()) {
                     batteryVoltage.setError("Battery Voltage is required!");
                     batteryVoltage.requestFocus();
                     return;
                 }
-                if(motor_Watt.isEmpty()){
+                if (motor_Watt.isEmpty()) {
                     motorWatt.setError("Motor Watt is required!");
                     motorWatt.requestFocus();
                     return;
                 }
-                if(bottom_CutOff.isEmpty()){
+                if (bottom_CutOff.isEmpty()) {
                     bottomCutOff.setError("Bottom CutOff is required!");
                     bottomCutOff.requestFocus();
                     return;
                 }
-                if(upper_CutOff.isEmpty()){
+                if (upper_CutOff.isEmpty()) {
                     upperCutOff.setError("Upper CutOff is required!");
                     upperCutOff.requestFocus();
                     return;
@@ -344,7 +336,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
 
                 batteryDialog.dismiss();
-                Toast.makeText(ScooterDashboard.this,"Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScooterDashboard.this, "Saved", Toast.LENGTH_SHORT).show();
                 tryPreviousSettings();
             }
         });
@@ -353,7 +345,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             @Override
             public void onClick(View view) {
                 batteryDialog.dismiss();
-                Toast.makeText(ScooterDashboard.this,"Back", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScooterDashboard.this, "Back", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -362,38 +354,36 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     }
 
 
-    public void resetTapped(View view)
-    {
+    public void resetTapped(View view) {
         AlertDialog.Builder resetAlert = new AlertDialog.Builder(this);
         resetAlert.setTitle("Reset Timer");
         resetAlert.setMessage("Are you sure you want to reset the timer?");
-        resetAlert.setPositiveButton("Reset", new DialogInterface.OnClickListener()
-        {
+        resetAlert.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                if(timerTask != null)
-                {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (timerTask != null) {
                     timerTask.cancel();
                     setButtonUI(R.drawable.ic_baseline_play_arrow_24);
                     time = 0.0;
                     timerStarted = false;
-                    timerText.setText(formatTime(0,0,0));
+                    timerText.setText(formatTime(0, 0, 0));
 
 
                     totalDistance = 0;
                     locEnd = null;
-                    textViewTotalDistance.setText(String.format("%.1f", totalDistance)+" km");
+                    batteryPercentageStart = 0;
+                    if(stopThread == false) {
+                        stopThread(view);
+                    }
+                    textViewTotalDistance.setText(String.format("%.1f", totalDistance) + " km");
 
                 }
             }
         });
 
-        resetAlert.setNeutralButton("Cancel", new DialogInterface.OnClickListener()
-        {
+        resetAlert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
+            public void onClick(DialogInterface dialogInterface, int i) {
                 //do nothing
             }
         });
@@ -402,18 +392,14 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
     }
 
-    public void startStopTapped(View view)
-    {
-        if(timerStarted == false)
-        {
+    public void startStopTapped(View view) {
+        if (timerStarted == false) {
             locEnd = null;
             timerStarted = true;
             setButtonUI(R.drawable.ic_baseline_pause_24);
 
             startTimer();
-        }
-        else
-        {
+        } else {
             timerStarted = false;
             setButtonUI(R.drawable.ic_baseline_play_arrow_24);
             timerTask.cancel();
@@ -421,25 +407,19 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         }
     }
 
-    private void setButtonUI(int start)
-    {
+    private void setButtonUI(int start) {
         //stopStartButton.setText(start);
         //stopStartButton.setTextColor(ContextCompat.getColor(this, color));
         stopStartButton.setImageResource(start);
     }
 
-    private void startTimer()
-    {
-        timerTask = new TimerTask()
-        {
+    private void startTimer() {
+        timerTask = new TimerTask() {
             @Override
-            public void run()
-            {
-                runOnUiThread(new Runnable()
-                {
+            public void run() {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         time++;
                         timerText.setText(getTimerText());
                         getDistance();
@@ -448,12 +428,11 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             }
 
         };
-        timer.scheduleAtFixedRate(timerTask, 0 ,1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
     }
 
 
-    private String getTimerText()
-    {
+    private String getTimerText() {
         int rounded = (int) Math.round(time);
         int seconds = ((rounded % 86400) % 3600) % 60;
         int minutes = ((rounded % 86400) % 3600) / 60;
@@ -462,32 +441,30 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         return formatTime(seconds, minutes, hours);
     }
 
-    private String formatTime(int seconds, int minutes, int hours)
-    {
-        return String.format("%02d",hours) + " : " + String.format("%02d",minutes) + " : " + String.format("%02d",seconds);
+    private String formatTime(int seconds, int minutes, int hours) {
+        return String.format("%02d", hours) + " : " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds);
     }
 
 
-
     public void getDistance() {
-        if(locEnd == null){
+        if (locEnd == null) {
             locEnd = locStart;
-        }else {
+        } else {
 
-            if(locStart.distanceTo(locEnd) / 1000 < 1) {
+            if (locStart.distanceTo(locEnd) / 1000 < 1) {
                 totalDistance += locStart.distanceTo(locEnd) / 1000;
-                textViewTotalDistance.setText(String.format("%.1f", totalDistance)+" km");
+                textViewTotalDistance.setText(String.format("%.1f", totalDistance) + " km");
 
                 locEnd = locStart;
-            }else{
+            } else {
                 locEnd = locStart;
             }
         }
     }
 
-    public double getAveragedSpeed(){
+    public double getAveragedSpeed() {
 
-        if(totalDistance == 0 || Math.round(time) == 0) return 0;
+        if (totalDistance == 0 || Math.round(time) == 0) return 0;
 
         double rounded = (double) Math.round(time);
 
@@ -495,20 +472,16 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
                 .setScale(3, RoundingMode.HALF_UP)
                 .doubleValue();
 
-        avgSpeed = totalDistance / hours ;
+        avgSpeed = totalDistance / hours;
 
         //textViewAvgSpeed.setText(String.format("%.2f",avgSpeed) +" km/h");
         return avgSpeed;
     }
 
 
-
-
-
-
     @Override
     public void onLocationChanged(Location location) {
-        if(location!=null){
+        if (location != null) {
             CLocation myLocation = new CLocation(location);
             this.updateSpeed(myLocation);
             this.updateLocation(myLocation);
@@ -530,18 +503,19 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     public void onProviderDisabled(String provider) {
 
     }
+
     @SuppressLint("MissingPermission")
     private void doStuff() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if(locationManager != null){
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
+        if (locationManager != null) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
-        Toast.makeText(this,"Waiting GPS Connection!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Waiting GPS Connection!", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateSpeed(CLocation location){
+    private void updateSpeed(CLocation location) {
         Formatter fmt = new Formatter(new StringBuilder());
-        if(location!=null){
+        if (location != null) {
             nCurrentSpeed = location.getSpeed();
             fmt.format(Locale.US, "%.1f", nCurrentSpeed);
             String strCurrentSpeed = fmt.toString();
@@ -554,10 +528,10 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
     }
 
-    private void updateLocation(CLocation location){
+    private void updateLocation(CLocation location) {
 
-        double nLatitude =0,nLongitud =0;
-        if(location!=null){
+        double nLatitude = 0, nLongitud = 0;
+        if (location != null) {
             nLatitude = location.getLatitude();
             nLongitud = location.getLongitude();
         }
@@ -583,8 +557,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     }
 
 
-
-    public void tryPreviousSettings(){
+    public void tryPreviousSettings() {
         //get batterySettings in Scooter if exist
         reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("scooter").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -592,7 +565,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ScooterInfo userProfile = snapshot.getValue(ScooterInfo.class);
 
-                if(userProfile != null) {
+                if (userProfile != null) {
 
 
                     batteryAhX = Double.parseDouble(userProfile.batteryAh);
@@ -603,7 +576,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
                     batterySettingsDefined = true;
                 }
-                if(userProfile == null) {
+                if (userProfile == null) {
                     Toast.makeText(ScooterDashboard.this, "Click battery to set up!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -631,14 +604,15 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     }
 
 
-
-    class ExampleRunnable extends ScooterDashboard implements Runnable {
-
+    class ExampleRunnable implements Runnable {
 
 
         @Override
         public void run() {
-            while (!stopThread){
+            if (!batterySettingsDefined) {
+                tryPreviousSettings();
+            }
+            while (!stopThread) {
                 BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
                 System.out.println(btAdapter.getBondedDevices());
 
@@ -658,7 +632,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
                     }
                     counter++;
                 } while (!btSocket.isConnected() && counter < 3);
-                if(btSocket.isConnected()){
+                if (btSocket.isConnected()) {
                     System.out.println("ITS  OKAYYYYY");
                     isBluetoothSuccess = true;
                 }
@@ -680,7 +654,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
                     for (int i = 0; i < 4; i++) {
 
                         char b = (char) inputStream.read();
-                        byteArray[i]=b;
+                        byteArray[i] = b;
                         voltageString += b;
 
 
@@ -691,16 +665,9 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
                     currentBatteryVoltage = voltage;
                     System.out.println(currentBatteryVoltage);
                     //calculate the % and km, and change image of battery while currentVoltage is > 0
-                    if(!batterySettingsDefined){
-                        tryPreviousSettings();
-                    }
-                    if(currentBatteryVoltage > 0 && batterySettingsDefined){
-                        setTextBattery();
 
-                        //LayoutInflater inflater = getLayoutInflater();
-                        //View myView = inflater.inflate(R.layout.activity_scooter_dashboard, null);
-                        //TextView myTextView = myView.findViewById(R.id.textViewBatteryPercentage);
-                        //myTextView.setVisibility(View.VISIBLE);
+                    if (currentBatteryVoltage > 0 && batterySettingsDefined) {
+                        setTextBattery();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -723,56 +690,57 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     }
 
     private void setTextBattery() {
-        setBatteryPercentage();
-        setBatteryDistance();
-    }
+        double percentage = ((currentBatteryVoltage - bottomCutOffX) * 100) / (upperCutOffX - bottomCutOffX);
+        double distance = ((((batteryAhX * batteryVoltageX) / motorPowerX) * 30) * percentage) / 100 ; // default average 30 km/h
 
-    private void setBatteryDistance() {
+        if(batteryPercentageStart == 0){
+            batteryPercentageStart = percentage;
+        }
 
-        double distance = ((batteryAhX * batteryVoltageX) / motorPowerX) * 30; // default average 30 km/h
-
-        batteryDistance = distance;
-    }
-
-    private void setBatteryPercentage() {
-        TextView txtView = (TextView) ((Activity)context).findViewById(R.id.textViewBatteryPercentage);
-        txtView.setVisibility(View.VISIBLE);
-        double percentage = ((currentBatteryVoltage - bottomCutOffX) * 100) * (upperCutOffX - bottomCutOffX);
-        if(percentage > 90){
+        if (percentage > 90) {
             batBluetooth.setImageResource(R.drawable.bat100);
         }
-        if(percentage <= 90 && percentage > 80){
+        if (percentage <= 90 && percentage > 80) {
             batBluetooth.setImageResource(R.drawable.bat90);
         }
-        if(percentage <= 80 && percentage > 70){
+        if (percentage <= 80 && percentage > 70) {
             batBluetooth.setImageResource(R.drawable.bat80);
         }
-        if(percentage <= 70 && percentage > 60){
+        if (percentage <= 70 && percentage > 60) {
             batBluetooth.setImageResource(R.drawable.bat70);
         }
-        if(percentage <= 60 && percentage > 50){
+        if (percentage <= 60 && percentage > 50) {
             batBluetooth.setImageResource(R.drawable.bat60);
         }
-        if(percentage <= 50 && percentage > 40){
+        if (percentage <= 50 && percentage > 40) {
             batBluetooth.setImageResource(R.drawable.bat50);
         }
-        if(percentage <= 40 && percentage > 30){
+        if (percentage <= 40 && percentage > 30) {
             batBluetooth.setImageResource(R.drawable.bat40);
         }
-        if(percentage <= 30 && percentage > 20){
+        if (percentage <= 30 && percentage > 20) {
             batBluetooth.setImageResource(R.drawable.bat30);
         }
-        if(percentage <= 20 && percentage > 10){
+        if (percentage <= 20 && percentage > 10) {
             batBluetooth.setImageResource(R.drawable.bat20);
         }
-        if(percentage <= 10 && percentage > 0){
+        if (percentage <= 10 && percentage > 0) {
             batBluetooth.setImageResource(R.drawable.bat10);
         }
-        if(percentage <= 0){
+        if (percentage <= 0) {
             batBluetooth.setImageResource(R.drawable.bat0);
         }
 
         batteryPercentage = percentage;
-    }
+        batteryDistance = distance;
 
+        runOnUiThread(() -> {
+            textViewBatteryPercentage.setText(String.format("%.0f", batteryPercentage) + "%");
+            textViewBatteryPercentage.setVisibility(View.VISIBLE);
+            textViewBatteryDistance.setText(String.format("%.0f", batteryDistance) + "KM");
+            textViewBatteryDistance.setVisibility(View.VISIBLE);
+        });
+    }
 }
+
+
