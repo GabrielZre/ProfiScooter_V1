@@ -139,6 +139,21 @@
 
                 </ImageButton>
 
+                <ImageButton
+                    android:id="@+id/goFindMap"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitXY"
+                    android:padding="5dp"
+                    android:src="@drawable/search"
+                    app:layout_constraintTop_toTopOf="@id/signOut"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/goDashBoard"
+                    android:background="@drawable/buttonradiusstyle">
+
+                </ImageButton>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 

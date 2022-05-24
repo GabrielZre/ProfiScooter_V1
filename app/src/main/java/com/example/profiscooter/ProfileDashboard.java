@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -30,7 +31,7 @@ public class ProfileDashboard extends AppCompatActivity {
     private DatabaseReference reference;
     private String userID;
 
-    private ImageButton logout, goDashBoard;
+    private ImageButton logout, goDashBoard, goFindMap;
 
     RecyclerView recyclerViewHistory;
     DatabaseReference historyReference;
@@ -46,7 +47,7 @@ public class ProfileDashboard extends AppCompatActivity {
         logout = (ImageButton) findViewById(R.id.signOut);
         goDashBoard = (ImageButton) findViewById(R.id.goDashBoard);
         buttonRemoveHistory = (ImageButton) findViewById(R.id.buttonRemoveHistory);
-
+        goFindMap = (ImageButton) findViewById(R.id.goFindMap);
 
         buttonRemoveHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +63,13 @@ public class ProfileDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ProfileDashboard.this, ScooterDashboard.class));
+            }
+        });
+
+        goFindMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileDashboard.this, MapsActivity.class));
             }
         });
 

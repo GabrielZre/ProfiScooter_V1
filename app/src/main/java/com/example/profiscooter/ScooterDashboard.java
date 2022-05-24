@@ -438,8 +438,14 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         int minutes = ((rounded % 86400) % 3600) / 60;
         int hours = ((rounded % 86400) / 3600);
 
+        if(seconds % 10 == 0){
+            rateEcoDriving();
+        }
+
         return formatTime(seconds, minutes, hours);
     }
+
+
 
     private String formatTime(int seconds, int minutes, int hours) {
         return String.format("%02d", hours) + " : " + String.format("%02d", minutes) + " : " + String.format("%02d", seconds);
@@ -635,6 +641,8 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
                 if (btSocket.isConnected()) {
                     System.out.println("ITS  OKAYYYYY");
                     isBluetoothSuccess = true;
+                }else{
+                    isBluetoothSuccess = false;
                 }
 
                 try {
@@ -740,6 +748,11 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             textViewBatteryDistance.setText(String.format("%.0f", batteryDistance) + "KM");
             textViewBatteryDistance.setVisibility(View.VISIBLE);
         });
+    }
+
+
+    private void rateEcoDriving() {
+
     }
 }
 
