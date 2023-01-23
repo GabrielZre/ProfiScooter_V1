@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">22476331514-l5utus27j2vjudjho56dhlp8lr5g5kuh.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">22476331514</string>
+    <string name="google_api_key" translatable="false">AIzaSyDIwS4sd6gJi8W7jksqu2iP7hXiE7nmJkg</string>
+    <string name="google_app_id" translatable="false">1:22476331514:android:5302919dab5b1d1528ac43</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDIwS4sd6gJi8W7jksqu2iP7hXiE7nmJkg</string>
+    <string name="google_storage_bucket" translatable="false">profiscooterauth.appspot.com</string>
+    <string name="project_id" translatable="false">profiscooterauth</string>
+</resources>

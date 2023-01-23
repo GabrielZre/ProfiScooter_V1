@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <style name="Theme.ProfiScooter" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#0ED689</item>
+        <item name="colorPrimaryVariant">#0ED689</item>
+        <item name="colorOnPrimary">#0ED689</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#0ED689</item>
+        <item name="colorSecondaryVariant">#0ED689</item>
+        <item name="colorOnSecondary">#0ED689</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" ns1:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

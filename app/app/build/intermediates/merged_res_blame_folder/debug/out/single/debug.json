@@ -1,0 +1,230 @@
+[
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_scooter_dashboard.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_scooter_dashboard.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_battery_std_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_battery_std_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_delete_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_delete_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat50.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat50.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_batterysettings.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\batterysettings.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_play_arrow_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_play_arrow_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable-v24_bat100.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable-v24\\bat100.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_battery_0_bar_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_battery_0_bar_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat20.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat20.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_road.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\road.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat70.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat70.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_bookmark_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_bookmark_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_savedialog.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\savedialog.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat10.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat10.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat0.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat0.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable-v24_background_dashboard.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable-v24\\background_dashboard.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_stop_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_stop_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat80.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat80.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_register_user.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_register_user.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_check_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_check_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat90.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat90.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_electric_scooter_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_electric_scooter_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_profile_dashboard.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_profile_dashboard.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_logout_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_logout_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_maps.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_maps.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat30.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat30.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_buttonradiusstyle.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\buttonradiusstyle.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_batbluetooth.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\batbluetooth.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable-v24_search.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable-v24\\search.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_bolt_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_bolt_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_main.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_historyitem.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\historyitem.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat60.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat60.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable-v24_batfill.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable-v24\\batfill.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat40.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat40.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_access_time_filled_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_access_time_filled_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_speed_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_speed_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_forgot_password.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_forgot_password.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_bookmark_add_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_bookmark_add_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_bookmark_remove_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_bookmark_remove_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_battery_saver_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_battery_saver_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_pause_24.xml.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\ic_baseline_pause_24.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\merged_res\\debug\\drawable_bat100.png.flat",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\drawable\\bat100.png"
+    }
+]

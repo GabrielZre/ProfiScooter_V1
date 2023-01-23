@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_maps.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_maps.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_register_user.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_register_user.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_profile_dashboard.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_profile_dashboard.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\historyitem.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\historyitem.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\batterysettings.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\batterysettings.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_forgot_password.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_forgot_password.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\savedialog.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\savedialog.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\ProfiScooter\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_scooter_dashboard.xml",
+        "source": "D:\\AndroidProjects\\ProfiScooter\\app\\src\\main\\res\\layout\\activity_scooter_dashboard.xml"
+    }
+]

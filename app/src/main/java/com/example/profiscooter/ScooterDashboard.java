@@ -27,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,7 +83,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     private static boolean batterySettingsDefined = false;
     private static double batteryAhX, batteryVoltageX, motorPowerX, bottomCutOffX, upperCutOffX;
     private static double currentBatteryVoltage;
-    private static double batteryPercentage, batteryDistance;
+    private static double batteryPercentage, batteryDistance, maxBatteryDistance;
     private static double batteryPercentageStart = 0;
 
     private static Location locEnd = null;
@@ -100,6 +101,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
     TextView timerText;
     ImageButton stopStartButton, saveButton;
     ImageView batBluetooth;
+    RatingBar ecoRatingBar;
 
 
     Timer timer;
@@ -126,6 +128,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         //check for gps permission
         textViewBatteryDistance = findViewById(R.id.textViewBatteryDistance);
         textViewBatteryPercentage = findViewById(R.id.textViewBatteryPercentage);
+        ecoRatingBar = (RatingBar) findViewById(R.id.ratingBar);
 
         new ScooterDashboard().runOnUiThread(() -> {
 
@@ -438,10 +441,6 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         int minutes = ((rounded % 86400) % 3600) / 60;
         int hours = ((rounded % 86400) / 3600);
 
-        if(seconds % 10 == 0){
-            rateEcoDriving();
-        }
-
         return formatTime(seconds, minutes, hours);
     }
 
@@ -565,6 +564,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
 
     public void tryPreviousSettings() {
         //get batterySettings in Scooter if exist
+        maxBatteryDistance = 0.0;
         reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("scooter").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -607,6 +607,7 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
         batBluetooth.setImageResource(R.drawable.batbluetooth);
         textViewBatteryPercentage.setVisibility(View.INVISIBLE);
         textViewBatteryDistance.setVisibility(View.INVISIBLE);
+        ecoRatingBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -747,12 +748,21 @@ public class ScooterDashboard extends AppCompatActivity implements LocationListe
             textViewBatteryPercentage.setVisibility(View.VISIBLE);
             textViewBatteryDistance.setText(String.format("%.0f", batteryDistance) + "KM");
             textViewBatteryDistance.setVisibility(View.VISIBLE);
+
         });
+
+        if(maxBatteryDistance == 0.0){
+            maxBatteryDistance = ((batteryAhX * batteryVoltageX) / motorPowerX) * 30;
+        }
+        rateEcoDriving();
     }
 
 
     private void rateEcoDriving() {
-
+        double perfectDistanceRating = ((((batteryAhX * batteryVoltageX) / motorPowerX) * 30) * (batteryPercentageStart - batteryPercentage)) / 100;
+        double actualDifference = (totalDistance / perfectDistanceRating) * 5 ; // rating for 5 stars
+        //ecoRatingBar.setVisibility(View.VISIBLE);
+        //ecoRatingBar.setRating((float) actualDifference); // sprawdzić na żywym organiźmie czy będzie się wywalać, jeśli tak to przenieść wyżej i sety to runUI
     }
 }
 
