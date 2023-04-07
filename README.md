@@ -1,6 +1,6 @@
 "# ProfiScooter_V1" 
 
-Electeic scooter app which calculates the distance, time, average speed and getting info about current battery state via bluetooth module, extended by GPS tracker, to find the scooter. 
+Electric scooter app which calculates the distance, time, average speed and getting info about current battery state via bluetooth module, extended by GPS tracker, to find the scooter. 
 Users can save the trip details to database. 
 Every saved trip is displayed in user history. 
 
